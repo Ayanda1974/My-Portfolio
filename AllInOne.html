@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Previous head content remains the same -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ayanda Buthelezi - Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        /* All previous styles remain the same */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e9f2 100%);
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: flex-end;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+            list-style: none;
+        }
+
+        nav a {
+            color: #333;
+            text-decoration: none;
+            padding: 0.5rem 1.5rem;
+            margin: 0 0.5rem;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        nav a:hover {
+            background: #4f46e5;
+            color: white;
+        }
+
+        .logoname {
+            position: absolute;
+            left: 2rem;
+            font-size: 1.5rem;
+        }
+
+        .logoname a {
+            text-decoration: none;
+            color: #4f46e5;
+        }
+
+        .logoname span {
+            color: #333;
+        }
+
+        /* Hero Section */
+        .content {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            text-align: center;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e9f2 100%);
+        }
+
+        .profile img {
+            width: 280px;
+            height: 350px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            margin: 2rem 0;
+            transition: transform 0.3s ease;
+        }
+
+        .profile img:hover {
+            transform: translateY(-10px);
+        }
+
+        .head h2 {
+            font-size: 2.5rem;
+            color: #4f46e5;
+            margin-bottom: 1rem;
+        }
+
+        .text {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        button {
+            background: #4f46e5;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 5px;
+            margin-top: 2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background: #4338ca;
+            transform: translateY(-2px);
+        }
+
+        button a {
+            color: white;
+            text-decoration: none;
+        }
+
+        /* About Section */
+        #about {
+            padding: 5rem 2rem;
+            background: white;
+        }
+
+        .about {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .skills {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .skill-item {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .skill-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .skill-bar {
+            height: 10px;
+            background: #e5e7eb;
+            border-radius: 5px;
+            margin-top: 0.5rem;
+            overflow: hidden;
+        }
+
+        .skill-progress {
+            height: 100%;
+            background: #4f46e5;
+            border-radius: 5px;
+            transition: width 1s ease;
+        }
+
+        .skill-progress {
+            height: 100%;
+            background: #4f46e5;
+            border-radius: 5px;
+            width: 0; /* Start at 0 width */
+            transition: width 1.5s ease-out; /* Smooth animation */
+        }
+
+        .skill-item {
+            opacity: 0; /* Start invisible */
+            transform: translateY(20px); /* Start slightly below */
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .skill-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Projects Section */
+        #projects {
+            padding: 5rem 2rem;
+            background: #f8fafc;
+        }
+
+        .projects {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .project-card {
+            background: transparent;
+            width: 100%;
+            height: 300px;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .project-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+        }
+
+        .project-card:hover .project-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .project-card-front, .project-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            background: white;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-card-back {
+            transform: rotateY(180deg);
+            padding: 1.5rem;
+            justify-content: center;
+            align-items: center;
+            background: #4f46e5;
+            color: white;
+        }
+
+        .project-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .project-card-front .project-info {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .flip-hint {
+            font-size: 0.8rem;
+            color: #666;
+            margin-top: 0.5rem;
+            font-style: italic;
+        }
+
+        /* Contact Section */
+        #contact {
+            padding: 5rem 2rem;
+            background: white;
+        }
+
+        .contact-info {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .contact-info a {
+            display: inline-block;
+            margin: 1rem;
+            color: #4f46e5;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .contact-info a:hover {
+            color: #4338ca;
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            nav li {
+                margin: 0.5rem 0;
+            }
+
+            .logoname {
+                position: relative;
+                text-align: center;
+                left: 0;
+                margin-bottom: 1rem;
+            }
+
+            .projects {
+                grid-template-columns: 1fr;
+            }
+        }
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .contact-info {
+            text-align: left;
+        }
+
+        .contact-form {
+            background: #f8fafc;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #4f46e5;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 5px;
+            font-family: inherit;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #4f46e5;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        .submit-btn {
+            background: #4f46e5;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .submit-btn:hover {
+            background: #4338ca;
+            transform: translateY(-2px);
+        }
+
+        .address-box {
+            background: #f8fafc;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-top: 2rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .address-box i {
+            color: #4f46e5;
+            margin-right: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation and Hero section remain the same -->
+    <nav>
+        <h1 class="logoname"><a href="#home">Ayanda<span>Buthelezi</span></a></h1>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <div id="home" class="content">
+            <div class="head">
+                <h2>Software Developer</h2>
+            </div>
+            <div class="text">
+                <p>I am a passionate software developer with amazing skills. Unlock your curiosity and 
+                    discover the creativity that drives my coding mastery. Let's build the future together!</p>
+                <button><a href="#about">About Me</a></button>
+            </div>
+            <div class="profile">
+                <img src="/image.jpeg" alt="Ayanda Buthelezi">
+            </div>
+        </div>
+
+        <!-- About section remains the same -->
+        <section id="about">
+            <div class="about">
+                <h2>About Me</h2>
+                <p>My name is Ayanda Buthelezi. I am a self-driven software developer who is always ready
+                to explore new ways of solving problems. I am currently in my final year pursuing my
+                Diploma in Information Communications Technology at Mangosuthu University of Technology,
+                specializing in Software Development.</p>
+                
+                <div class="skills">
+                    <div class="skill-item" data-skill-level="25">
+                        <h3>Python</h3>
+                        <div class="skill-bar">
+                            <div class="skill-progress"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item" data-skill-level="50">
+                        <h3>JavaScript</h3>
+                        <div class="skill-bar">
+                            <div class="skill-progress"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item" data-skill-level="75">
+                        <h3>CSS</h3>
+                        <div class="skill-bar">
+                            <div class="skill-progress"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item" data-skill-level="100">
+                        <h3>HTML</h3>
+                        <div class="skill-bar">
+                            <div class="skill-progress"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item" data-skill-level="100">
+                        <h3>Java</h3>
+                        <div class="skill-bar">
+                            <div class="skill-progress"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item" data-skill-level="100">
+                        <h3>C#</h3>
+                        <div class="skill-bar">
+                            <div class="skill-progress"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Updated Projects section -->
+        <section id="projects">
+            <h2>My Projects</h2>
+            <div class="projects">
+                <div class="project-card">
+                    <div class="project-card-inner">
+                        <div class="project-card-front">
+                            <div class="project-info">
+                                <h3>Attendify</h3>
+                                <p>A student attendance tracking system that streamlines the process of recording and monitoring student attendance in educational institutions.</p>
+                                <p class="flip-hint">(Hover to see project image)</p>
+                            </div>
+                        </div>
+                        <div class="project-card-back">
+                            <i class="fas fa-user-check project-icon"></i>
+                            <h3>Attendify</h3>
+                            <p>Student Attendance Tracker</p>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="project-card">
+                    <div class="project-card-inner">
+                        <div class="project-card-front">
+                            <div class="project-info">
+                                <h3>EasyTicketPay</h3>
+                                <p>An innovative payment solution that simplifies the way commuters pay and recharge their travel tickets.</p>
+                                <p class="flip-hint">(Hover to see project image)</p>
+                            </div>
+                        </div>
+                        <div class="project-card-back">
+                            <i class="fas fa-ticket-alt project-icon"></i>
+                            <h3>EasyTicketPay</h3>
+                            <p>Smart Ticketing Solution</p>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="project-card">
+                    <div class="project-card-inner">
+                        <div class="project-card-front">
+                            <div class="project-info">
+                                <h3>Snake and Ladder</h3>
+                                <p>A classic chance-based board game featuring 100 squares, where players navigate through snakes and ladders.</p>
+                                <p class="flip-hint">(Hover to see project image)</p>
+                            </div>
+                        </div>
+                        <div class="project-card-back">
+                            <i class="fas fa-dice project-icon"></i>
+                            <h3>Snake and Ladder</h3>
+                            <p>Classic Board Game</p>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="project-card">
+                    <div class="project-card-inner">
+                        <div class="project-card-front">
+                            <div class="project-info">
+                                <h3>BestBrightness Website</h3>
+                                <p>E-commerce platform for cleaning products</p>
+                                <p class="flip-hint">(Hover to see project image)</p>
+                            </div>
+                        </div>
+                        <div class="project-card-back">
+                            <i class="fas fa-shopping-cart project-icon"></i>
+                            <h3>BestBrightness</h3>
+                            <p>E-commerce Platform</p>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="project-card">
+                    <div class="project-card-inner">
+                        <div class="project-card-front">
+                            <div class="project-info">
+                                <h3>Rock, Paper, Scissors Game</h3>
+                                <p>Interactive browser-based game</p>
+                                <p class="flip-hint">(Hover to see project image)</p>
+                            </div>
+                        </div>
+                        <div class="project-card-back">
+                            <i class="fas fa-hand-rock project-icon"></i>
+                            <h3>Rock, Paper, Scissors</h3>
+                            <p>Interactive Game</p>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="project-card">
+                    <div class="project-card-inner">
+                        <div class="project-card-front">
+                            <div class="project-info">
+                                <h3>Color Water Sort Game</h3>
+                                <p>Puzzle game with color sorting mechanics</p>
+                                <p class="flip-hint">(Hover to see project image)</p>
+                            </div>
+                        </div>
+                        <div class="project-card-back">
+                            <i class="fas fa-fill-drip project-icon"></i>
+                            <h3>Color Water Sort</h3>
+                            <p>Puzzle Game</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact section remains the same -->
+        <section id="contact">
+            <h2>Contact Me</h2>
+            <div class="contact-container">
+                <div class="contact-info">
+                    <h3>Get in Touch</h3>
+                    <p>Feel free to reach out to me for any inquiries or collaboration opportunities.</p>
+                    
+                    <div class="social-icons">
+                        <a href="mailto:22139118@live.mut.ac.za" title="School Email">
+                            <i class="fas fa-envelope fa-2x"></i>
+                        </a>
+                        <a href="mailto:ayandabuthelezi1974@gmail.com" title="Personal Email">
+                            <i class="fas fa-envelope fa-2x"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/in/ayanda-buthelezi-a6503b21a" title="ayanda-buthelezi-a6503b21a" target="_blank">
+                            <i class="fab fa-linkedin fa-2x"></i>
+                        </a>
+                        <a href="https://github.com/Ayanda1974" title="Ayanda1974" target="_blank">
+                            <i class="fab fa-github fa-2x"></i>
+                        </a>
+                    </div>
+    
+                    <div class="address-box">
+                        <h4><i class="fas fa-map-marker-alt"></i>Address</h4>
+                        <p>107 OR Tambo Parade<br>
+                           South Beach<br>
+                           Durban, 4001<br>
+                           South Africa</p>
+                    </div>
+                </div>
+    
+                <div class="contact-form">
+                    <form action="mailto:ayandabuthelezi1974@gmail.com" method="POST" enctype="text/plain">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" required placeholder="Enter your name">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required placeholder="Enter your email">
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" required placeholder="Write your message here"></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Function to check if an element is in viewport
+        function isInViewport(element) {
+            const rect = element.getBoundingClientRect();
+            return (
+                rect.top >= 0 &&
+                rect.left >= 0 &&
+                rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+                rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+            );
+        }
+
+        // Function to animate skills when they come into view
+        function animateSkills() {
+            const skillItems = document.querySelectorAll('.skill-item');
+            
+            skillItems.forEach(item => {
+                if (isInViewport(item) && !item.classList.contains('visible')) {
+                    // Add visible class to fade in the skill item
+                    item.classList.add('visible');
+                    
+                    // Get the skill level from data attribute
+                    const skillLevel = item.dataset.skillLevel;
+                    
+                    // Find the progress bar within this skill item
+                    const progressBar = item.querySelector('.skill-progress');
+                    
+                    // Animate the progress bar
+                    setTimeout(() => {
+                        progressBar.style.width = skillLevel + '%';
+                    }, 200);
+                }
+            });
+        }
+
+        // Add scroll event listener
+        window.addEventListener('scroll', animateSkills);
+        
+        // Initial check for visible skills
+        document.addEventListener('DOMContentLoaded', animateSkills);
+    </script>
+</body>
+</html>
